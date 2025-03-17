@@ -43,6 +43,7 @@ def main(args):
                 vol_out = process_dcm(case_info, target_size)
             elif file_type == "raw":
                 vol_out = process_raw(case_info, target_size)
+                print("Data processed!")
             elif file_type == "tif":
                 vol_out = process_tif(case_info, target_size)
             else:
@@ -86,6 +87,7 @@ def process_raw(case_info, target_size):
         .reshape(case_info["shape"][::-1])
         .astype(float)
     )
+    print("Data read!")
     data = data.transpose([2, 1, 0])
     data_min = data.min()
     data_max = data.max()

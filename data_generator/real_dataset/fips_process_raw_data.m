@@ -1,6 +1,8 @@
 %% Data path
-data_path = "FIPS_raw/pine/20201118_pine_cone_";
-data_save_path = "FIPS_processed/pine";
+% data_path = "FIPS_raw/pine/20201118_pine_cone_";
+% data_save_path = "FIPS_processed/pine";
+data_path = "/home/rishabh/projects/r2_gaussian/data_generator/real_dataset/FIPS_raw/pine/20201118_pine_cone_"
+data_save_path = "/home/rishabh/projects/r2_gaussian/data_generator/real_dataset/FIPS_processed/pine"
 % data_path = "FIPS_raw/seashell/20211124_seashell_";
 % data_save_path = "FIPS_processed/seashell";
 % data_path = "FIPS_raw/walnut/20201111_walnut_";

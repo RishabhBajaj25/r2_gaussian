@@ -1,8 +1,8 @@
 import numpy as np
 import pyvista as pv
 
-vol_path = "data/synthetic_dataset/cone_ntrain_50_angle_360/0_chest_cone/vol_gt.npy"
-
+#vol_path = "data/synthetic_dataset/cone_ntrain_50_angle_360/0_chest_cone/vol_gt.npy"
+vol_path = "/home/rishabh/projects/r2_gaussian/output/seashell/point_cloud/iteration_30000/vol_pred.npy"
 
 vol = np.load(vol_path)
 
