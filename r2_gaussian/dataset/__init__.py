@@ -35,7 +35,7 @@ class Scene:
 
         self.train_cameras = {}
         self.test_cameras = {}
-
+        print(osp.join(osp.dirname(args.source_path), "meta_data.json"))
         # Read scene info
         if osp.exists(osp.join(args.source_path, "meta_data.json")):
             # Blender format

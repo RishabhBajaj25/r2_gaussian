@@ -21,6 +21,7 @@ def main(args, init_parser: InitParams):
         raise ValueError("{} find no case!".format(case_paths))
 
     for case_path in case_paths:
+        print(f"Processing {case_path}")
         case_path = case_path[:-1]
         case_name = osp.basename(case_path)
         init_output_path = osp.join(
@@ -29,7 +30,7 @@ def main(args, init_parser: InitParams):
         )
         os.makedirs(osp.dirname(init_output_path), exist_ok=True)
         print(f"Initialization for {osp.basename(case_path)} start.")
-        cmd = f"CUDA_VISIBLE_DEVICES={device} python initialize_pcd.py --data {case_path} --output {init_output_path}"
+        cmd = f"CUDA_VISIBLE_DEVICES={device} python ./initialize_pcd.py --data {case_path} --output {init_output_path}"
         init_args = vars(init_parser)
         for var in init_args:
             cmd += f" --{var} {init_args[var]}"
@@ -41,7 +42,9 @@ if __name__ == "__main__":
     # fmt: off
     parser = argparse.ArgumentParser()
     init_parser = InitParams(parser)
-    parser.add_argument("--data", type=str, help="Path to dataset.")
+    # parser.add_argument("--data", default="/home/rishabh/projects/r2_gaussian/data/real_dataset/", help="Path to dataset.")
+    parser.add_argument("--data", default="/home/rishabh/projects/r2_gaussian/data/synthetic_dataset/", help="Path to dataset.")
+
     parser.add_argument("--device", default=0, type=int, help="GPU device.")
     # fmt: on
 

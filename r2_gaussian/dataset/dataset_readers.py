@@ -44,9 +44,14 @@ def readBlenderInfo(path, eval):
     """Read blender format CT data."""
     # Read meta data
     meta_data_path = osp.join(path, "meta_data.json")
+    print(meta_data_path)
+    if "synthetic_dataset" in path:
+        key = "vol"
+    else:
+        key = "ct"
     with open(meta_data_path, "r") as handle:
         meta_data = json.load(handle)
-    meta_data["vol"] = osp.join(path, meta_data["vol"])
+    meta_data[key] = osp.join(path, meta_data[key])
 
     if not "dVoxel" in meta_data["scanner"]:
         meta_data["scanner"]["dVoxel"] = list(
@@ -79,7 +84,7 @@ def readBlenderInfo(path, eval):
     train_cam_infos = cam_infos["train"]
     test_cam_infos = cam_infos["test"]
 
-    vol_gt = torch.from_numpy(np.load(meta_data["vol"])).float().cuda()
+    vol_gt = torch.from_numpy(np.load(meta_data[key])).float().cuda()
 
     scene_info = SceneInfo(
         train_cameras=train_cam_infos,

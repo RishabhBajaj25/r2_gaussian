@@ -1,9 +1,11 @@
 import open3d as o3d
 import numpy as np
 import matplotlib as plt
+import os.path as osp
 
 # Load the .npy file containing the point cloud
-point_cloud_data = np.load('/home/rishabh/projects/r2_gaussian/data/real_dataset/pine/init_pine.npy')
+npy_file = '/home/rishabh/projects/r2_gaussian/data/synthetic_dataset/cone_ntrain_75_angle_360/0_foot_cone/init_0_foot_cone.npy'
+point_cloud_data = np.load(npy_file)
 
 # Extract the 3D coordinates (assuming the first three columns are x, y, z)
 points = point_cloud_data[:, :3]
@@ -20,3 +22,4 @@ pcd.colors = o3d.utility.Vector3dVector(colors)
 
 # Visualize the point cloud
 o3d.visualization.draw_geometries([pcd])
+o3d.io.write_point_cloud(npy_file.split('.')[0] + '.ply', pcd)

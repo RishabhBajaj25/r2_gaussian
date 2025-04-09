@@ -6,7 +6,8 @@ import sys
 sys.path.append("./")
 from r2_gaussian.utils.plot_utils import show_one_volume
 
-proj_path = "data/real_dataset/seashell/train"
+# proj_path = "data/real_dataset/seashell/train"
+proj_path = "/home/rishabh/projects/r2_gaussian/data/real_dataset/pine/proj_train"
 proj_list = sorted(os.listdir(proj_path))
 
 projs = np.stack(
