@@ -1,7 +1,7 @@
 &nbsp;
 
 # Rishabh's fork of Rectifying Radiative Gaussian Splatting for Tomographic Reconstruction (R2-Gaussian)
-tet
+
 _Note:_ To be used in the 3DGS_Alignment project, after training R2-Gaussian, run the `pickle2ply.py` script to convert the `.pickle` files to the vanilla 3DGS `.ply` format. This is necessary for the alignment process.
 <div align="center">
 
