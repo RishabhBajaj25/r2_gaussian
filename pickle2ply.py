@@ -1,8 +1,15 @@
 import pickle
 import numpy as np
 from plyfile import PlyData, PlyElement
-import matplotlib.cm as cm
 
+
+
+import matplotlib
+matplotlib.use("TkAgg")  # Force it to use the Qt5 GUI backend
+
+print(matplotlib.get_backend())
+import matplotlib.cm as cm
+import matplotlib.pyplot as plt
 def pickle_to_ply(pickle_path, ply_path):
     # Load the pickle file
     with open(pickle_path, "rb") as f:
@@ -14,15 +21,40 @@ def pickle_to_ply(pickle_path, ply_path):
     rotation = data["rotation"]  # Shape (N, 4)
     opacities = data["density"]  # Shape (N, 1)
     N = xyz.shape[0]
+    print(opacities.min(), opacities.max())
+    # Plot the histogram
+    plt.hist(opacities.flatten(), bins=1000)
+    plt.title("Opacity Histogram")
+    plt.xlabel("Opacity")
+    plt.ylabel("Frequency")
+    plt.show()
 
-    # Normalize opacities
-    opacity_min, opacity_max = opacities.min(), opacities.max()
-    opacity_shifted = opacities - opacity_min  # Shift to positive range
-    opacities_norm = opacity_shifted / opacity_shifted.max()  # Normalize to [0,1]
+    # # Normalize opacities
+    # opacity_min, opacity_max = opacities.min(), opacities.max()
+    # opacity_shifted = opacities - opacity_min  # Shift to positive range
+    # opacities_norm = opacity_shifted / opacity_shifted.max()  # Normalize to [0,1]
+    #
+    # # Map to colors using plasma colormap
+    colormap = cm.get_cmap("inferno")  # You can change this to any colormap you prefer
+    # colors = colormap(opacities_norm.flatten())[:, :3]  # Extract RGB, ignore alpha
 
-    # Map to colors using plasma colormap
-    colormap = cm.get_cmap("plasma")
-    colors = colormap(opacities_norm.flatten())[:, :3]  # Extract RGB, ignore alpha
+    p_min, p_max = np.percentile(opacities, [5, 95])  # Ignore extreme outliers
+    opacities_clipped = np.clip(opacities, p_min, p_max)
+    opacities_norm = (opacities_clipped - p_min) / (p_max - p_min)
+    colors = colormap(opacities_norm.flatten())[:, :3]
+
+    plt.hist(opacities_norm.flatten(), bins=1000)
+    plt.title("opacities_norm Histogram")
+    plt.xlabel("opacities_norm")
+    plt.ylabel("Frequency")
+    plt.show()
+
+    opacities_norm_clipped = np.clip(opacities_norm, 0.4, 0.8)
+    plt.hist (opacities_norm_clipped.flatten(), bins=1000)
+    plt.title("opacities_norm_clipped Histogram")
+    plt.xlabel("opacities_norm_clipped")
+    plt.ylabel("Frequency")
+    plt.show()
 
     # Assign colors to _features_dc
     f_dc = colors.astype(np.float32)
@@ -60,7 +92,7 @@ def pickle_to_ply(pickle_path, ply_path):
     PlyData([el]).write(ply_path)
 
 # Example usage
-pickle_to_ply(
-    "/home/rishabh/projects/r2_gaussian/output/foot/point_cloud/iteration_30000/point_cloud.pickle",
-    "/home/rishabh/projects/r2_gaussian/output/foot/point_cloud/iteration_30000/f_rest_test.ply"
-)
+input_pickle = "/home/rishabh/projects/r2_gaussian/output/chest/point_cloud/iteration_30000/point_cloud.pickle"
+output_ply = input_pickle.split(".")[0] + ".ply"
+
+pickle_to_ply(input_pickle, output_ply)
