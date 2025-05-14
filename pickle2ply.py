@@ -91,7 +91,7 @@ def pickle_to_ply(pickle_path, ply_path):
     el = PlyElement.describe(elements, "vertex")
     PlyData([el]).write(ply_path)
 
-# Example usage
+
 input_pickle = "/home/rishabh/projects/r2_gaussian/output/chest/point_cloud/iteration_30000/point_cloud.pickle"
 output_ply = input_pickle.split(".")[0] + ".ply"
 

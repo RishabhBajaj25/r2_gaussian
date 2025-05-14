@@ -2,7 +2,12 @@
 
 # Rishabh's fork of Rectifying Radiative Gaussian Splatting for Tomographic Reconstruction (R2-Gaussian)
 
-_Note:_ To be used in the 3DGS_Alignment project, after training R2-Gaussian, run the `pickle2ply.py` script to convert the `.pickle` files to the vanilla 3DGS `.ply` format. This is necessary for the alignment process.
+_Note:_ 
+* To be used in the 3DGS_Alignment project, after training R2-Gaussian, run the `pickle2ply.py` script to convert the `.pickle` files to the vanilla 3DGS `.ply` format. This is necessary for the alignment process.
+* The `pickle2ply.py` file has a few variants as follows:
+  * `pickle2ply.py`: Has some colormap modifiers which don't work too well.
+  * `old_pickle2ply.py`: Converts the `.pickle` files to the vanilla 3DGS `.ply` format. Old and reliable.
+  * `stricter_pickle2ply.py`: Contains masks that filter out the lower opacities and retains the lower scales (which means tightly focused Gaussian that contain details). It also has color modifiers which are experimental at this stage.
 <div align="center">
 
 <p align="center"> <img src="assets/logo.png" width="250px"> </p>
