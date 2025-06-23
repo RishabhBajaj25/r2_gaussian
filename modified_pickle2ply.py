@@ -1,5 +1,5 @@
 # This file is for modifying the colors of the gaussian splat as a function of its distance from a camera position
-#
+
 import pickle
 
 import numpy as np

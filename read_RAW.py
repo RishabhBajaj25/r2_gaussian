@@ -4,7 +4,7 @@ import matplotlib
 matplotlib.use("TkAgg")  # Force it to use the Qt5 GUI backend
 
 print(matplotlib.get_backend())
-# File path (use raw string for Windows path or escape backslashes)
+#  File path (use raw string for Windows path or escape backslashes)
 file_path = "/media/rishabh/SSD_1/Data/XRay_Data/UTokyo/CR_20250618_170040/00000.RAW"
 
 # Image dimensions
