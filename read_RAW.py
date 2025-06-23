@@ -42,13 +42,25 @@ n_imgs = 10
 for i in range(n_imgs):
     file_path = file_path.replace(format(i,"05"),format(i+1,"05"))
     image = np.rot90(read_raw_xray(file_path, width=2352, height=2944, dtype=np.uint16), k=3)
+    image_norm = (image - image.min()) / (image.max() - image.min())  # Normalize to [0, 1]
+    # Display the image and norm image
 
-    # Display the image
-    plt.figure(figsize=(10, 10))
-    plt.imshow(image, cmap='gray')
-    plt.colorbar()
-    plt.title('X-ray Image')
+    # # Enhanced visualization
+    fig, axes = plt.subplots(1, 2, figsize=(18, 6))
+
+    # Original image
+    axes[0].imshow(image, cmap='gray')
+    axes[0].set_title('Original X-ray')
+    axes[0].axis('off')
+
+    # Contrast stretched to full range
+    axes[1].imshow(image_norm, cmap='gray')
+    axes[1].set_title('Normalized X-ray')
+    axes[1].axis('off')
+
+    plt.tight_layout()
     plt.show()
+
 
 
 # # Enhanced visualization
