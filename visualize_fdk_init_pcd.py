@@ -1,25 +1,37 @@
 import open3d as o3d
 import numpy as np
-import matplotlib as plt
-import os.path as osp
+import matplotlib.pyplot as plt
+import argparse
+import os
 
-# Load the .npy file containing the point cloud
-npy_file = '/home/rishabh/projects/r2_gaussian/data/synthetic_dataset/cone_ntrain_75_angle_360/0_foot_cone/init_0_foot_cone.npy'
-point_cloud_data = np.load(npy_file)
+def convert_npy_to_ply(npy_path):
+    # Load the .npy file
+    point_cloud_data = np.load(npy_path)
 
-# Extract the 3D coordinates (assuming the first three columns are x, y, z)
-points = point_cloud_data[:, :3]
+    # Extract the 3D coordinates (assume first 3 columns are x, y, z)
+    points = point_cloud_data[:, :3]
 
-# Create an Open3D point cloud object
-pcd = o3d.geometry.PointCloud()
-pcd.points = o3d.utility.Vector3dVector(points)
+    # Create Open3D point cloud object
+    pcd = o3d.geometry.PointCloud()
+    pcd.points = o3d.utility.Vector3dVector(points)
 
-# Optionally, if the point cloud has density or color information (in the 4th column), you can assign it
-# Example: Assign densities as colors
-densities = point_cloud_data[:, 3]
-colors = plt.cm.viridis(densities / densities.max())[:, :3]  # Normalize densities to [0, 1]
-pcd.colors = o3d.utility.Vector3dVector(colors)
+    # Use 4th column (e.g., density) as color if it exists
+    if point_cloud_data.shape[1] > 3:
+        densities = point_cloud_data[:, 3]
+        colors = plt.cm.viridis(densities / densities.max())[:, :3]  # Normalize and map to RGB
+        pcd.colors = o3d.utility.Vector3dVector(colors)
 
-# Visualize the point cloud
-o3d.visualization.draw_geometries([pcd])
-o3d.io.write_point_cloud(npy_file.split('.')[0] + '.ply', pcd)
+    # Visualize
+    o3d.visualization.draw_geometries([pcd])
+
+    # Save to .ply
+    ply_path = os.path.splitext(npy_path)[0] + '.ply'
+    o3d.io.write_point_cloud(ply_path, pcd)
+    print(f"Saved PLY to: {ply_path}")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Convert .npy point cloud to .ply using Open3D.")
+    parser.add_argument("--npy_path", type=str, required=True, help="Path to .npy point cloud file.")
+    args = parser.parse_args()
+
+    convert_npy_to_ply(args.npy_path)

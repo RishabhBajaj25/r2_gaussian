@@ -60,11 +60,11 @@ def read_meta(data,
         int(data["nVoxel_Y_orig"] * scale_factor_voxel),
         int(data["nVoxel_Z_orig"] * scale_factor_voxel)
     ]
-    # data["dVoxel"] = [
-    #     data["dVoxel_X_orig"] / scale_factor_voxel,
-    #     data["dVoxel_Y_orig"] / scale_factor_voxel,
-    #     data["dVoxel_Z_orig"] / scale_factor_voxel
-    # ]
+    data["dVoxel"] = [
+        data["dVoxel_X_orig"] / scale_factor_voxel,
+        data["dVoxel_Y_orig"] / scale_factor_voxel,
+        data["dVoxel_Z_orig"] / scale_factor_voxel
+    ]
 
 
     # as we do not have the reconstruction data, we create a dummy one
@@ -89,8 +89,8 @@ def read_raw(indices, data, path):
             mode='reflect',
             anti_aliasing=False
         ).astype(np.float32)
-
-        projections.append(raw_data)
+        raw_data_norm = (raw_data - raw_data.min()) / (raw_data.max() - raw_data.min())
+        projections.append(raw_data_norm)
     projections = -np.array(projections)
     projections -= projections.min()
     return {

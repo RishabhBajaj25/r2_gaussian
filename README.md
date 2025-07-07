@@ -8,6 +8,7 @@ _Note:_
   * `pickle2ply.py`: Has some colormap modifiers which don't work too well.
   * `old_pickle2ply.py`: Converts the `.pickle` files to the vanilla 3DGS `.ply` format. Old and reliable.
   * `stricter_pickle2ply.py`: Contains masks that filter out the lower opacities and retains the lower scales (which means tightly focused Gaussian that contain details). It also has color modifiers which are experimental at this stage.
+  * `modified_pickle2ply.py`: Uses distance from a static camera center as a coloring mask (experimental).
 <div align="center">
 
 <p align="center"> <img src="assets/logo.png" width="250px"> </p>

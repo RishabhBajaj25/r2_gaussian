@@ -21,7 +21,9 @@ from r2_gaussian.dataset import Scene
 from r2_gaussian.utils.general_utils import t2a
 
 np.random.seed(0)
-
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use("TkAgg")  # Force it to use the Qt5 GUI backend
 
 class InitParams(ParamGroup):
     def __init__(self, parser):

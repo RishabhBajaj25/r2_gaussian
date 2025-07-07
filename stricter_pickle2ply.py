@@ -23,7 +23,7 @@ def pickle_to_ply(pickle_path, ply_path):
     # Compute the threshold value at the given percentile
     op_threshold = np.percentile(opacities, op_percentile)
 
-    scale_percentile = 80  # Retain only smaller 80% of Gaussians (i.e., remove outer blurry blobs)
+    scale_percentile = 100  # Retain only smaller 80% of Gaussians (i.e., remove outer blurry blobs)
     # Compute the threshold value at the given percentile
     scale_x_threshold = np.percentile(scale[:,0], scale_percentile)
     scale_y_threshold = np.percentile(scale[:,1], scale_percentile)
@@ -92,5 +92,5 @@ def pickle_to_ply(pickle_path, ply_path):
     PlyData([el]).write(ply_path)
 # Example usage
 input_pickle = "/home/rishabh/projects/r2_gaussian/output/head/point_cloud/iteration_30000/point_cloud.pickle"
-output_ply = input_pickle.split(".")[0] + "_strict_check.ply"
+output_ply = input_pickle.split(".")[0] + "_100s_85o_trial_strict_check.ply"
 pickle_to_ply(input_pickle, output_ply)
